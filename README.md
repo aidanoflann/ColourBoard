@@ -8,3 +8,14 @@ docker-compose up
 ```
 
 This will start up the server on port 3000. The port can be changed in the `docker-compose.yml` file.
+
+
+**Troubleshooting**
+
+On Windows, you may have an issue where, despite the docker-compose.yml file forwarding the port, your docker app
+is not accessible from host. This appears to be a recent Docker For Windows limitation, which can be worked around by
+installing a prior Docker version:
+
+```
+choco install docker-for-windows --version 17.09.1.14687
+```
