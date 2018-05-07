@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/aidanoflann/ColourBoard.js/issues"
   },
-  "homepage": "https://github.com/aidanoflann/ColourBoard.js#readme"
+  "homepage": "https://github.com/aidanoflann/ColourBoard.js#readme",
+  "dependencies": {
+    "redis": "^2.8.0"
+  }
 }
