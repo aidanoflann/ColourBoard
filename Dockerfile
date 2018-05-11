@@ -4,4 +4,4 @@ MAINTAINER Aidan O Flannagain
 ADD . /code
 WORKDIR /code
 
-CMD node index.js
+CMD node src/index.js

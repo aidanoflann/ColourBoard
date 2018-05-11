@@ -5,6 +5,7 @@ const hostname = '0.0.0.0';
 const port = 3000;
 
 const server = http.createServer((request, response) => {
+    console.log("Request received");
     request.statusCode = 200;
     response.end('Hello, World!');
 });
