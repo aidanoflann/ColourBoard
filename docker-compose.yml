@@ -4,11 +4,11 @@ services:
     container_name: web
     build: .
     ports:
-     - "3000:3000"
+     - '3000:3000'
     volumes:
-      - "./src:/code/src"
+      - './src:/code/src'
     environment:
-      REDIS_HOST: "test"
+      REDIS_HOST: 'test'
 
   colour_board:
     <<: *colour_board_base

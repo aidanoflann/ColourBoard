@@ -10,6 +10,8 @@ const server = http.createServer((request, response) => {
     console.log('Request received');
     request.statusCode = 200;
     response.end('REDIS_HOST IS: ' + settings.redis_host);
+    redis_db.getPlayers();
+    console.log('Request complete');
 });
 
 server.listen(port, hostname, () => {console.log('Server started on port: ' + port)});
