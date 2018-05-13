@@ -4,4 +4,16 @@ MAINTAINER Aidan O Flannagain
 ADD . /code
 WORKDIR /code
 
-CMD node src/app/index.js
+ARG DEVELOPMENT
+
+# install all dependencies
+RUN npm install
+
+# install nodemon globally
+RUN npm install -g nodemon
+
+# run the app
+CMD if [ "$DEVELOPMENT" == true]; \
+    then node src/app/index.js; \
+    else nodemon src/app/index.js; \
+    fi

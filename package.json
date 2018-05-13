@@ -18,5 +18,6 @@
   "homepage": "https://github.com/aidanoflann/ColourBoard.js#readme",
   "dependencies": {
     "redis": "^2.8.0"
-  }
+  },
+  "devDependencies": {}
 }
