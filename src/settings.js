@@ -1,5 +1,9 @@
 // Try to fetch any local_settings (file may not be present - and shouldn't be in prod)
-let local_settings = require("./local_settings.js") || {};
+let local_settings = {};
+try {
+    local_settings = require("./local_settings.js");
+}
+catch (e) {}
 
 let settings = {
     redis_host: process.env.REDIS_HOST || 0,
