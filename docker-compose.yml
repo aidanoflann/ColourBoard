@@ -16,7 +16,6 @@ services:
       context: .
       target: production
 
-  # TODO: use colour_board as base, currently have some duplication
   colour_board_dev:
     <<: *colour_board_base
     build:
