@@ -1,5 +1,5 @@
 settings= {
-    redis_host: "15"
+    redis_host: process.env.REDIS_HOST || 0
 };
 
 module.exports=settings
