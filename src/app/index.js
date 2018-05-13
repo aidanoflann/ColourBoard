@@ -7,9 +7,8 @@ const port = 3000;
 
 const server = http.createServer((request, response) => {
     console.log("Request received");
-    console.log("Settings: " + settings.redis_host);
     request.statusCode = 200;
-    response.end('Hello, World!');
+    response.end("REDIS_HOST IS: " + settings.redis_host);
 });
 
 server.listen(port, hostname, () => {console.log("Server started on port: " + port)});

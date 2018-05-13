@@ -1,5 +1,5 @@
 settings= {
-    redis_host: "12345678891011"
+    redis_host: "15"
 };
 
 module.exports=settings

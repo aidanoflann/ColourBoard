@@ -27,6 +27,16 @@ To see the logs of a running container:
 docker logs --tail 100 -f web
 ```
 
+**Live debugging**
+
+You may find it useful to use the dev version of the docker image, which will allow you to trigger live server changes
+automatically by changing any file in the `src` folder:
+
+```
+docker-compose build colour_board_dev
+docker-compose up colour_board_dev
+```
+
 
 **Troubleshooting**
 
