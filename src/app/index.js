@@ -1,5 +1,5 @@
 const http = require('http');
-const settings = require("./settings.js");
+const settings = require("../settings.js");
 
 // this will be inside a Docker container, so use 0.0.0.0 instead of 127.0.0.1 loopback
 const hostname = '0.0.0.0';
