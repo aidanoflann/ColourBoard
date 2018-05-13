@@ -1,6 +1,6 @@
-version: '3'
+version: '3.4'
 services:
-  colour_board:
+  colour_board_base : &colour_board_base
     container_name: web
     build: .
     ports:
@@ -10,16 +10,15 @@ services:
     environment:
       REDIS_HOST: "test"
 
+  colour_board:
+    <<: *colour_board_base
+    build:
+      context: .
+      target: production
+
   # TODO: use colour_board as base, currently have some duplication
   colour_board_dev:
-      container_name: web
-      build:
-        context: .
-        args:
-          DEVELOPMENT: "true"
-      ports:
-       - "3000:3000"
-      volumes:
-        - "./src:/code/src"
-      environment:
-        REDIS_HOST: "test"
+    <<: *colour_board_base
+    build:
+      context: .
+      target: development
