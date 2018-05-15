@@ -1,9 +1,41 @@
 const redis = require('redis');
 const settings = require('../settings.js');
+const {PlayerList, Player, Login} = require('./models.js');
 
 // create the redis client
 // NOTE: port and host are positional arguments, entered in that order
 client = redis.createClient(settings.redis_port, settings.redis_host);
+
+// cache of player list
+_playerList = new PlayerList([]);
+
+function initPlayerList()
+{
+    return new Promise((resolve, reject) => {
+        // fetch all user keys, based on the 'user:' prefix
+        client.keys('user:*', (err, player_keys) => {
+            // early out if there are no new users
+            if(player_keys.length === _playerList.totalPlayers)
+            {
+                console.log('Skipping initiation of player list, already have ' + _playerList.totalPlayers + ' players.');
+                return
+            }
+
+            // iterate over each player key, and generate a new Player model if required
+            player_keys.forEach((player_key, index) => {
+                let username = player_key.split(':')[1];
+                client.hget(player_key, 'colour', (err, fetched_colour) => {
+                    if (!_playerList.HasPlayer(fetched_colour))
+                    {
+                        console.log('Generating Player model for ' + username + ' using key: ' + player_key + '.');
+                        _playerList.AddPlayer(new Player(username, fetched_colour));
+                    }
+                });
+            });
+            resolve();
+        });
+    });
+}
 
 function getPlayers()
 // read the entire redis db and generate a list of Player models with their up-to-date logins, etc.
@@ -11,61 +43,32 @@ function getPlayers()
 {
     // TODO watch
 
-    // generate an object mapping each colour to their Player object
-    let players = {};
-    client.keys('user:*', (err, keys) => {
-        keys.forEach((key) => {
-            let username = key.split(':')[1];
-            console.log('Generating Player model for ' + username + ' using key: ' + key + '.');
-            client.hget(key, 'colour', (err, colour) => {
-                console.log(colour);
+    return new Promise((resolve, reject) => {
+        // init first as this will update the models (and expects them to be initialised already)
+        initPlayerList().then(() => {
+            // now update the login history of each Player
+            client.lrange('entries', 0, -1, (err, entries) => {
+                // TODO check here what the difference between _playerList.totalLogins and entries.length is
+                entries.forEach((entry) => {
+                    entry_obj = JSON.parse(entry);
+                    player_model = _playerList.GetPlayer(entry_obj['colour-to']);
+
+                    if (player_model) {
+                        console.log('Found entry for ' + player_model.username);
+                    }
+                    else
+                    {
+                        console.error('ERROR: colour ' + entry_obj['colour_to'] +
+                            ' found in entries but not Players. Skipping...');
+                    }
+                })
             });
-            players[username] = new Player(username, "#00000");
-            console.log(players[username]);
-        })
+        });
     });
 
-    // now update the login history of each Player
-    client.lrange('entries', 0, -1, (err, entries) => {
-        entries.forEach((entry) => {
-            entry_obj = JSON.parse(entry);
-            if (entry_obj.colour_to in entries) {
 
-            }
-            else
-            {
-                throw Error('U dun fuckd up');
-            }
-        })
-    });
-
-    // TODO apply
+    // TODO exec
 }
 
-
-class Player
-{
-    constructor(username, colour)
-    {
-        this.username = username;  //string
-        this.colour = colour;  //string (hash)
-
-        this.currentlyLoggedIn = false;  //bool
-        this.logins = [];  //array<Login>
-    }
-
-    AddLogin(login, logout) {
-        this.logins.push(new Login(login, logout));
-    }
-
-}
-class Login
-{
-    constructor(login, logout)
-    {
-        this.login = login;  // Datetime
-        this.logout = logout; // Datetime
-    }
-}
 
 module.exports = {getPlayers};
