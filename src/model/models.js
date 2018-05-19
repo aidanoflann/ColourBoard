@@ -42,8 +42,15 @@ class Player
         this.logins = [];  //array<Login>
     }
 
-    AddLogin(login, logout) {
-        this.logins.push(new Login(login, logout));
+    AddLogin(login) {
+        this.logins.push(new Login(login, null));
+    }
+
+    AddLogout(logout) {
+        if (this.logins[this.logins.length - 1].logout) {
+            throw "Cannot add logout - value already present in most recent Login."
+        }
+        this.logins[this.logins.length - 1].logout = logout;
     }
 
 }
