@@ -3,7 +3,6 @@ class PlayerList
     constructor(players)
     {
         this.players=players;  //obj
-        this.totalLogins = 0;  //int
         this.totalPlayers = 0;  //int
     }
 
@@ -21,12 +20,6 @@ class PlayerList
     GetPlayer(colour)
     {
         return this.players[colour];
-    }
-
-    AddLogin(player_colour, login, logout)
-    {
-        this.player[player_colour].AddLogin(login, logout);
-        this.totalLogins ++;
     }
 }
 

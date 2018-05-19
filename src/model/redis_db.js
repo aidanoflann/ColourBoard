@@ -43,6 +43,11 @@ function getPlayers()
 // This is an expensive operation, the output of which should be cached
 {
     // TODO watch
+    if (_playerList.totalPlayers > 0)
+    {
+        // TODO: some way to add latest entries if there are new ones...
+        return _playerList;
+    }
     return new Promise((resolve, reject) => {
         // init first as this will update the models (and expects them to be initialised already)
         initPlayerList().then(() => {
@@ -50,7 +55,7 @@ function getPlayers()
             client.lrange('entries', 0, -1, (err, entries) => {
                 // TODO check here what the difference between _playerList.totalLogins and entries.length is
                 let previousPlayerModel = null;
-                entries.forEach((entry) => {
+                entries.forEach((entry, index) => {
                     let entryObj = JSON.parse(entry);
                     let playerModel = _playerList.GetPlayer(entryObj['colour-to']);
                     let logTime = entryObj.time;
@@ -65,8 +70,11 @@ function getPlayers()
                         console.log('Found entry for ' + playerModel.username);
                         // ...and add a LOGIN for the CURRENT user
                         playerModel.AddLogin(logTime);
+                        if (index === entries.length - 1)
+                        {
+                            playerModel.currentlyLoggedIn = true;
+                        }
                     }
-
                     else
                     {
                         console.error('ERROR: colour ' + entryObj['colour_to'] +
@@ -75,8 +83,9 @@ function getPlayers()
                     previousPlayerModel = playerModel;
                 })
             });
-            console.log(_playerList);
         });
+        console.log(_playerList);
+        return _playerList
     });
     // TODO exec
 }
