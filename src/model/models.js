@@ -21,6 +21,18 @@ class PlayerList
     {
         return this.players[colour];
     }
+
+    CurrentlyLoggedInPlayer()
+    {
+        let playerColour = null;
+        Object.values(this.players).forEach((player) => {
+            if (player.currentlyLoggedIn)
+            {
+                playerColour = player.colour;
+            }
+        });
+        return this.players[playerColour];
+    }
 }
 
 

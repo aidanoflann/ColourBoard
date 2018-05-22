@@ -43,12 +43,13 @@ function getPlayers()
 // This is an expensive operation, the output of which should be cached
 {
     // TODO watch
-    if (_playerList.totalPlayers > 0)
-    {
-        // TODO: some way to add latest entries if there are new ones...
-        return _playerList;
-    }
     return new Promise((resolve, reject) => {
+        if (_playerList.totalPlayers > 0)
+        {
+            // TODO: some way to add latest entries if there are new ones...
+            resolve(_playerList);
+            return
+        }
         // init first as this will update the models (and expects them to be initialised already)
         initPlayerList().then(() => {
             // now update the login history of each Player
@@ -82,10 +83,9 @@ function getPlayers()
                     }
                     previousPlayerModel = playerModel;
                 })
+                resolve(_playerList);
             });
         });
-        console.log(_playerList);
-        return _playerList
     });
     // TODO exec
 }
