@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/aidanoflann/ColourBoard.js#readme",
   "dependencies": {
-    "canvasjs": "^1.8.1",
+    "chart.js": "^2.7.2",
     "express": "^4.16.3",
     "pug": "^2.0.3",
     "redis": "^2.8.0"

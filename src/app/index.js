@@ -12,7 +12,10 @@ app.set('views', './src/views');
 app.get('/', (request, response) => {
     console.log('Request received');
     redis_db.getPlayers().then( (players) => {
-        response.render('index', {'currentlyLoggedInColour': players.CurrentlyLoggedInPlayer().colour});
+        response.render('index', {
+            'currentlyLoggedInColour': players.CurrentlyLoggedInPlayer().colour,
+            'myFunction': function() {console.log('i dun ran my fanctan')}
+        });
     })
 });
 app.listen(port, hostname, () => {console.log('Server started on port: ' + port)});
