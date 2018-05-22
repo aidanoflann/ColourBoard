@@ -7,32 +7,36 @@ html
             body {
                 background: #{currentlyLoggedInColour};
             }
-        p HI
-        canvas#myChart
+        center
+            p THESE STATS ARE FROZEN. NOT UP TO DATE.
+            div(style={width: '50%'})
+                canvas#myChart
         block specific-js
             //TODO: don't use remote Chart.js
             script(type='text/javascript', src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js")
             script(type='text/javascript').
                 window.onload = function() {
-                    var data = {
-                        labels: ["January", "February", "March", "April", "May", "June", "July"],
-                        datasets: [
-                            {
-                                label: "My First dataset",
-                                fillColor: "rgba(220,220,220,0.2)",
-                                strokeColor: "rgba(220,220,220,1)",
-                                pointColor: "rgba(220,220,220,1)",
-                                pointStrokeColor: "#fff",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(220,220,220,1)",
-                                data: {}
+                    let ctx = document.getElementById("myChart").getContext("2d");
+                    let myNewChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ["VANBAKES", "JENJEN"],
+                            datasets: [
+                                {
+                                    label: "ColourPals",
+                                    data: [900, 1000]  // TODO: add datas
+                                }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    display: true,
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
                             }
-                        ]
-                    };
-
-                    var ctx = document.getElementById("myChart").getContext("2d");
-                    var myNewChart = new Chart(ctx, {
-                        type: 'line',
-                        data: data
+                        }
                     });
                 }
