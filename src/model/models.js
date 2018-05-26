@@ -45,10 +45,22 @@ class Player
 
         this.currentlyLoggedIn = false;  //bool
         this.logins = [];  //array<Login>
+        this._score = 0;
+    }
+
+    Score() {
+        if(this.currentlyLoggedIn)
+        {
+            // TODO add time til now
+            return this._score
+        }
+        return this._score
     }
 
     AddLogin(login) {
         this.logins.push(new Login(login, null));
+        let lastLogin = this.logins[this.logins.length -1];
+        this._score += lastLogin.duration;
     }
 
     AddLogout(logout) {
@@ -65,6 +77,10 @@ class Login
     {
         this.login = login;  // Datetime
         this.logout = logout; // Datetime
+    }
+
+    duration() {
+        return this.logout - this.login;
     }
 }
 
