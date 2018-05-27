@@ -4,6 +4,7 @@ class PlayerList
     {
         this.players=players;  //obj - maps player colour to its object
         this.totalPlayers = 0;  //int
+        this.totalLogins = 0;
     }
 
     AddPlayer(player)
