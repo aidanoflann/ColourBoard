@@ -2,7 +2,7 @@ class PlayerList
 {
     constructor(players)
     {
-        this.players=players;  //obj
+        this.players=players;  //obj - maps player colour to its object
         this.totalPlayers = 0;  //int
     }
 
@@ -57,10 +57,15 @@ class Player
         return this._score
     }
 
-    AddLogin(login) {
+    AddLogin(loginString) {
+        let login = new Date(loginString);
+        // add the logout to the previous login (if it exists)
+        if (this.logins.length > 0) {
+            let lastLogin = this.logins[this.logins.length - 1];
+            lastLogin.logout = login;
+            this._score += lastLogin.duration();
+        }
         this.logins.push(new Login(login, null));
-        let lastLogin = this.logins[this.logins.length -1];
-        this._score += lastLogin.duration;
     }
 
     AddLogout(logout) {

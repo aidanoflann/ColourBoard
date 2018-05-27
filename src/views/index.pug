@@ -15,18 +15,26 @@ html
             //TODO: don't use remote Chart.js
             script(type='text/javascript', src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js")
             script(type='text/javascript').
-                // let allPlayerColours = "#{Object.keys(players.players)}"
-                // console.log(allPlayerColours);
+                // generate the scores and names from the given playerList data
+                let playerColours = Object.keys(!{playerList}.players);
+                let playerNames = playerColours.map(function(playerColour) {
+                    return !{playerList}.players[playerColour].username;
+                });
+                let playerScores = playerColours.map(function(playerColour) {
+                    return !{playerList}.players[playerColour]._score;
+                });
+                // TODO: Filter out the top 5 scores
+                console.log(playerScores);
                 window.onload = function() {
                     let ctx = document.getElementById("myChart").getContext("2d");
                     let myNewChart = new Chart(ctx, {
                         type: 'bar',
                         data: {
-                            labels: ["VANBAKES", "JENJEN"],
+                            labels: playerNames,
                             datasets: [
                                 {
                                     label: "ColourPals",
-                                    data: [900, 1000]  // TODO: add datas
+                                    data: playerScores
                                 }
                             ]
                         },

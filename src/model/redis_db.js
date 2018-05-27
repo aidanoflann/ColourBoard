@@ -7,7 +7,7 @@ const {PlayerList, Player, Login} = require('./models.js');
 client = redis.createClient(settings.redis_port, settings.redis_host);
 
 // cache of player list
-_playerList = new PlayerList([]);
+_playerList = new PlayerList({});
 
 function initPlayerList()
 {

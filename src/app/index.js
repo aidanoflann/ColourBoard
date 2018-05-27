@@ -11,12 +11,10 @@ app.set('views', './src/views');
 
 app.get('/', (request, response) => {
     console.log('Request received');
-    redis_db.getPlayers().then( (players) => {
-        // let scores = Object.values(players).map(p => p.Score());
-        // console.log(scores);
+    redis_db.getPlayers().then( (playerList) => {
         response.render('index', {
-            'currentlyLoggedInColour': players.CurrentlyLoggedInPlayer().colour,
-            'players': players
+            'currentlyLoggedInColour': playerList.CurrentlyLoggedInPlayer().colour,
+            'playerList': JSON.stringify(playerList)
         });
     })
 });
