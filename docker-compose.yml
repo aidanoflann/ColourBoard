@@ -1,7 +1,6 @@
 version: '3.4'
 services:
   colour_board_base : &colour_board_base
-    container_name: web
     build: .
     ports:
      - '3000:3000'
@@ -11,12 +10,14 @@ services:
       REDIS_HOST: 'test'
 
   colour_board:
+    container_name: colour_board_web
     <<: *colour_board_base
     build:
       context: .
       target: production
 
   colour_board_dev:
+    container_name: colour_board_web_dev
     <<: *colour_board_base
     build:
       context: .

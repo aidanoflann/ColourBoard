@@ -8,7 +8,6 @@ html
                 background: #{currentlyLoggedInColour};
             }
         center
-            p THESE STATS ARE FROZEN. NOT UP TO DATE.
             div(style={width: '50%', background:'white'})
                 canvas#myChart
         block specific-js
@@ -26,7 +25,6 @@ html
                 });
 
                 // Filter to the top 5 scores
-                console.log(playerColours);
                 let fifthBestScore = -100;
                 if(scoreArray.length > 5)
                 {
@@ -42,7 +40,6 @@ html
                 let playerNames = filteredPlayerColours.map(function (playerColour) {
                     return !{playerList}.players[playerColour].username;
                 });
-                console.log(filteredPlayerColours);
 
                 window.onload = function() {
                     let ctx = document.getElementById("myChart").getContext("2d");
