@@ -50,10 +50,8 @@ html
                             datasets: [
                                 {
                                     label: "ColourPals",
+                                    backgroundColor: filteredPlayerColours,
                                     data: filteredPlayerScores,
-                                    bars: filteredPlayerColours.map(function(playerColour) {
-                                        return {fillColor: playerColour};
-                                    })
                                 }
                             ]
                         },
