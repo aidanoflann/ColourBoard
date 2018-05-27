@@ -17,14 +17,30 @@ html
             script(type='text/javascript').
                 // generate the scores and names from the given playerList data
                 let playerColours = Object.keys(!{playerList}.players);
-                let playerNames = playerColours.map(function(playerColour) {
+                let scoreArray = [];  // TODO: shouldn't need to make this but playerScores is not a real array =/
+
+                let playerScores = playerColours.map(function(playerColour) {
+                    let score =  !{playerList}.players[playerColour]._score / 1000 / 3600 / 24;  // ms->sec->hr->days
+                    scoreArray.push(score)
+                    return score
+                });
+
+                // Filter to the top 5 scores
+                let fifthBestScore = 0;
+                if(scoreArray.length > 5)
+                {
+                    scoreArray.sort();
+                    fifthBestScore = scoreArray[scoreArray.length - 6];
+                }
+                let filteredPlayerColours = playerColours.filter(function(colour, index) {
+                    return playerScores[index] > fifthBestScore;
+                })
+                let filteredPlayerScores = playerScores.filter(function(playerScore) {
+                    return playerScore > fifthBestScore;
+                })
+                let playerNames = filteredPlayerColours.map(function (playerColour) {
                     return !{playerList}.players[playerColour].username;
                 });
-                let playerScores = playerColours.map(function(playerColour) {
-                    return !{playerList}.players[playerColour]._score / 1000 / 3600 / 24;  // ms->sec->hr->days
-                });
-                // TODO: Filter out the top 5 scores
-                console.log(playerScores);
                 window.onload = function() {
                     let ctx = document.getElementById("myChart").getContext("2d");
                     let myNewChart = new Chart(ctx, {
@@ -34,8 +50,8 @@ html
                             datasets: [
                                 {
                                     label: "ColourPals",
-                                    data: playerScores,
-                                    bars: playerColours.map(function(playerColour) {
+                                    data: filteredPlayerScores,
+                                    bars: filteredPlayerColours.map(function(playerColour) {
                                         return {fillColor: playerColour};
                                     })
                                 }
