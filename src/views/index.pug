@@ -26,7 +26,8 @@ html
                 });
 
                 // Filter to the top 5 scores
-                let fifthBestScore = 0;
+                console.log(playerColours);
+                let fifthBestScore = -100;
                 if(scoreArray.length > 5)
                 {
                     scoreArray.sort();
@@ -41,6 +42,8 @@ html
                 let playerNames = filteredPlayerColours.map(function (playerColour) {
                     return !{playerList}.players[playerColour].username;
                 });
+                console.log(filteredPlayerColours);
+
                 window.onload = function() {
                     let ctx = document.getElementById("myChart").getContext("2d");
                     let myNewChart = new Chart(ctx, {

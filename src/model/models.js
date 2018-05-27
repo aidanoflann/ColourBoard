@@ -27,7 +27,7 @@ class PlayerList
     {
         let playerColour = null;
         Object.values(this.players).forEach((player) => {
-            if (player.currentlyLoggedIn)
+            if (player.logins[player.logins.length - 1].logout === null)
             {
                 playerColour = player.colour;
             }

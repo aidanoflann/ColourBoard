@@ -85,9 +85,13 @@ function getPlayers()
                     resolve(_playerList);
                 }
                 else {
-                    console.log(numNewEntries + "logins have occurred since last update. Updating...");
-                    client.lrange('entries', -numNewEntries, -1, (err, entries) => {
-                        AppendEntriesToPlayerList(_playerList, entries);
+                    console.log(numNewEntries + " logins have occurred since last update. Updating...");
+                    //re-initialise the player list in case there are new users
+                    initPlayerList().then(() => {
+                        client.lrange('entries', -numNewEntries, -1, (err, entries) => {
+                            AppendEntriesToPlayerList(_playerList, entries);
+                        });
+                        resolve(_playerList);
                     })
                 }
             });
