@@ -60,19 +60,17 @@ class Player
     AddLogin(loginString) {
         let login = new Date(loginString);
         // add the logout to the previous login (if it exists)
-        if (this.logins.length > 0) {
-            let lastLogin = this.logins[this.logins.length - 1];
-            lastLogin.logout = login;
-            this._score += lastLogin.duration();
-        }
         this.logins.push(new Login(login, null));
     }
 
-    AddLogout(logout) {
+    AddLogout(logoutString) {
+        let logout = new Date(logoutString);
         if (this.logins[this.logins.length - 1].logout) {
             throw "Cannot add logout - value already present in most recent Login."
         }
-        this.logins[this.logins.length - 1].logout = logout;
+        let lastLogin = this.logins[this.logins.length - 1];
+        lastLogin.logout = logout;
+        this._score += lastLogin.duration();
     }
 
 }

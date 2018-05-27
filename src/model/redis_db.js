@@ -68,7 +68,6 @@ function getPlayers()
                     }
 
                     if (playerModel) {
-                        console.log('Found entry for ' + playerModel.username);
                         // ...and add a LOGIN for the CURRENT user
                         playerModel.AddLogin(logTime);
                         if (index === entries.length - 1)

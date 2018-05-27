@@ -9,7 +9,7 @@ html
             }
         center
             p THESE STATS ARE FROZEN. NOT UP TO DATE.
-            div(style={width: '50%'})
+            div(style={width: '50%', background:'white'})
                 canvas#myChart
         block specific-js
             //TODO: don't use remote Chart.js
@@ -21,7 +21,7 @@ html
                     return !{playerList}.players[playerColour].username;
                 });
                 let playerScores = playerColours.map(function(playerColour) {
-                    return !{playerList}.players[playerColour]._score;
+                    return !{playerList}.players[playerColour]._score / 1000 / 3600 / 24;  // ms->sec->hr->days
                 });
                 // TODO: Filter out the top 5 scores
                 console.log(playerScores);
@@ -34,7 +34,10 @@ html
                             datasets: [
                                 {
                                     label: "ColourPals",
-                                    data: playerScores
+                                    data: playerScores,
+                                    bars: playerColours.map(function(playerColour) {
+                                        return {fillColor: playerColour};
+                                    })
                                 }
                             ]
                         },
