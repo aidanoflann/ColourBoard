@@ -51,7 +51,7 @@ html
                                 {
                                     label: "ColourPals",
                                     backgroundColor: filteredPlayerColours,
-                                    data: filteredPlayerScores,
+                                    data: filteredPlayerScores
                                 }
                             ]
                         },
@@ -61,6 +61,10 @@ html
                                     display: true,
                                     ticks: {
                                         beginAtZero: true
+                                    },
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'logged hours [days]'
                                     }
                                 }]
                             }
