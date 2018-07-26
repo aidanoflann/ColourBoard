@@ -49,15 +49,6 @@ class Player
         this._score = 0;
     }
 
-    Score() {
-        if(this.currentlyLoggedIn)
-        {
-            // TODO add time til now
-            return this._score
-        }
-        return this._score
-    }
-
     AddLogin(loginString) {
         let login = new Date(loginString);
         // add the logout to the previous login (if it exists)

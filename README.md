@@ -9,10 +9,10 @@ docker-compose up
 
 This will start up the server on port 3000. The port can be changed in the `docker-compose.yml` file.
 
-For development, you can change anything in the local src file, which is mounted into the container, and run
+For development, you can use the dev service, which will automatically restart node when any watched file is changed:
 
 ```
-docker-compose restart
+docker-compose up colour_board_dev
 ```
 
 for the changes to take effect. If changes affect the Dockerfile (e.g. the required modules, the location of the

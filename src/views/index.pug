@@ -19,7 +19,16 @@ html
                 let scoreArray = [];  // TODO: shouldn't need to make this but playerScores is not a real array =/
 
                 let playerScores = playerColours.map(function(playerColour) {
-                    let score =  !{playerList}.players[playerColour]._score / 1000 / 3600 / 24;  // ms->sec->hr->days
+                    let currentPlayer = !{playerList}.players[playerColour];
+                    let score =  currentPlayer._score;
+                    // add the time-until-now to the currently logged in user
+                    if(currentPlayer.currentlyLoggedIn)
+                    {
+                        let now = new Date();
+                        let lastLogin = Date.parse(currentPlayer.logins[currentPlayer.logins.length - 1].login);
+                        score += (now - lastLogin)
+                    }
+                    score = score / 1000 / 3600 / 24;  // ms->sec->hr->days
                     scoreArray.push(score)
                     return score
                 });
