@@ -38,6 +38,19 @@ docker-compose up colour_board_dev
 ```
 
 
+**Deployment**
+
+Currently deployment is manual. The docker image needs to be built and pushed using:
+
+```
+docker build -t colour_board_js .
+docker tag colour_board_js:latest 364843010988.dkr.ecr.eu-west-1.amazonaws.com/colour_board_js:latest
+docker push 364843010988.dkr.ecr.eu-west-1.amazonaws.com/colour_board_js:latest
+```
+
+Once this is done, the service needs to be restarted via AWS ECS. This will cause downtime, as for cost reasons there
+is no longer a load balancer/dynamic port management on the deployed server.
+
 **Troubleshooting**
 
 On Windows, you may have an issue where, despite the docker-compose.yml file forwarding the port, your docker app
